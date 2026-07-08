@@ -729,7 +729,7 @@ if menu == "Background":
     st.subheader("Description")
     st.info(BACKGROUND_DESCRIPTION)
 
-    background_image_path = Path(__file__).parent / "assets" / "llm_testing_task_distribution.png"
+    background_image_path = Path(__file__).parent /  "llm_testing_task_distribution.png"
     if background_image_path.exists():
         image_caption = (
             " "
