@@ -4,6 +4,7 @@ from __future__ import annotations
 import math
 import re
 import time
+from pathlib import Path
 from collections import Counter
 from typing import Any, Dict, List, Sequence, Tuple
 
@@ -724,9 +725,44 @@ st.markdown(f"<div style='background:#d9e2f3;padding:18px;border:1px solid #222;
 st.write("")
 
 if menu == "Background":
-    st.header("Background"); st.subheader("Description"); st.info(BACKGROUND_DESCRIPTION)
-    st.subheader("RAG-LLM Pipeline"); st.code("Use Case Dataset -> Preprocessing -> Chunking -> Retrieval -> RAG Architecture -> Open Source LLM -> Test Scenario Generation -> Test Plan Recommendation -> Evaluation Metric -> Comparison", language="text")
-    c1,c2,c3,c4 = st.columns(4); c1.metric("Use Cases",len(active_df)); c2.metric("Chunks",len(chunks_df)); c3.metric("Chunking",chunking_strategy); c4.metric("Retrieval",retrieval_method)
+    st.header("Background")
+    st.subheader("Description")
+    st.info(BACKGROUND_DESCRIPTION)
+
+    background_image_path = Path(__file__).parent / "assets" / "llm_testing_task_distribution.png"
+    if background_image_path.exists():
+        image_caption = (
+            " "
+        )
+
+        # Cross-version Streamlit compatibility:
+        # - Newer versions support use_container_width for st.image.
+        # - Older versions use use_column_width.
+        try:
+            st.image(
+                str(background_image_path),
+                caption=image_caption,
+                use_container_width=True,
+            )
+        except TypeError:
+            st.image(
+                str(background_image_path),
+                caption=image_caption,
+                use_column_width=True,
+            )
+
+    st.subheader("RAG-LLM Pipeline")
+    st.code(
+        "Use Case Dataset -> Preprocessing -> Chunking -> Retrieval -> RAG Architecture -> "
+        "Open Source LLM -> Test Scenario Generation -> Test Plan Recommendation -> "
+        "Evaluation Metric -> Comparison",
+        language="text"
+    )
+    c1,c2,c3,c4 = st.columns(4)
+    c1.metric("Use Cases",len(active_df))
+    c2.metric("Chunks",len(chunks_df))
+    c3.metric("Chunking",chunking_strategy)
+    c4.metric("Retrieval",retrieval_method)
 
 elif menu == "About":
     st.header("About")
@@ -740,13 +776,10 @@ elif menu == "About":
             box-shadow: 0 4px 14px rgba(0,0,0,0.06);
         ">
             <h3 style="margin-top:0; color:#1f3b5b;">
-                Berikut Prototype Hasil Experiment dari Penelitian Disertasi Doktoral Ilmu Komputer 
+                Berikut Prototype Hasil Experiment dari Penelitian Disertasi Doktoral Ilmu Komputer
             </h3>
             <p style="font-size:1.15rem; line-height:1.7; margin-bottom:0;">
                 <strong>Model Generative AI untuk Test Scenario dan Rekomendasi Test Plan berdasarkan Use Case</strong>
-            </p>
-            <p style="font-size:1.15rem; line-height:1.7; margin-bottom:0;">
-                <strong> Doctor Candidate Johannes Simatupang, S.Kom., M.Kom. </strong>
             </p>
         </div>
         """,
